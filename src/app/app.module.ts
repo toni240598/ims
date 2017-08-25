@@ -32,7 +32,7 @@ import { UpgradeComponent } from './upgrade/upgrade.component';
 
   ],
   imports: [
-    BrowserModule.withServerTransition({appId: 'ims'}),
+    BrowserModule,
     FormsModule,
     HttpModule,
     ComponentsModule,
