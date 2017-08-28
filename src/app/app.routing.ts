@@ -1,36 +1,40 @@
-import { NgModule } from '@angular/core';
-import { CommonModule, } from '@angular/common';
-import { BrowserModule  } from '@angular/platform-browser';
-import { Routes, RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { BrowserModule } from "@angular/platform-browser";
+import { CommonModule } from "@angular/common";
 
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
-import { TableListComponent } from './table-list/table-list.component';
-import { TypographyComponent } from './typography/typography.component';
-import { IconsComponent } from './icons/icons.component';
-import { MapsComponent } from './maps/maps.component';
-import { NotificationsComponent } from './notifications/notifications.component';
-import { UpgradeComponent } from './upgrade/upgrade.component';
+import { HomeComponent } from "./pages/home/home.component";
+import { HomeDashboardComponent  } from "./pages/home/home-dashboard/home-dashboard.component";
+import { StoreComponent } from "./pages/home/store/store.component";
+import { AlarmComponent } from "./pages/home/alarm/alarm.component";
+import { CeoComponent } from "./pages/ceo/ceo.component";
+import { StoreDashboardComponent } from "./pages/home/store/store-dashboard/store-dashboard.component";
+import { StoreInventoryComponent } from "./pages/home/store/store-inventory/store-inventory.component";
+import { StoreAlarmComponent }    from "./pages/home/store/store-alarm/store-alarm.component";
 
-const routes: Routes =[
-    { path: 'dashboard',      component: DashboardComponent },
-    { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'table-list',     component: TableListComponent },
-    { path: 'typography',     component: TypographyComponent },
-    { path: 'icons',          component: IconsComponent },
-    { path: 'maps',           component: MapsComponent },
-    { path: 'notifications',  component: NotificationsComponent },
-    { path: 'upgrade',        component: UpgradeComponent },
-      { path: '',          redirectTo: 'dashboard', pathMatch: 'full' }
-];
+const routes:Routes = [
+   {  path:"home", component: HomeComponent, data:{state:"home"}, children : [
+   		{ path : "dashboard", component : HomeDashboardComponent, data:{state:"home-dashboard"}},
+   		{ path : "store",     component : StoreComponent, data:{state:"store"}, children : [
+              {path:"dashboard", component:StoreDashboardComponent, data:{state:"store-dashboard"}},
+              {path:"inventory", component:StoreInventoryComponent, data:{state:"store-inventory"}},
+              {path:"alarm",     component:StoreAlarmComponent     ,data:{state:"store-alarm"}},
+              {path:"", redirectTo:"dashboard", pathMatch:"full"}
+         ]},
+         { path : "alarm",     component : AlarmComponent, data: {state:"alarm"}},
+   		{ path : '', redirectTo: 'dashboard', pathMatch:'full'}
+      ] 
+   },
+   { path :"ceo", component : CeoComponent, data:{state:"ceo"}},
+   { path: '', redirectTo: 'home', pathMatch: 'full' }
+]
 
 @NgModule({
-  imports: [
-    CommonModule,
-    BrowserModule,
-    RouterModule.forRoot(routes)
-  ],
-  exports: [
-  ],
+	imports: [
+	    CommonModule,
+	    BrowserModule,
+	    RouterModule.forRoot(routes)
+	]
 })
-export class AppRoutingModule { }
+
+export class AppRouterModule {} 
